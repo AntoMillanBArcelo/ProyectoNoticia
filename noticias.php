@@ -26,14 +26,15 @@ else
 
     <script>
         let slideIndex = 0;
-        let noticiasUsuario = []; // Variable para almacenar noticias del usuario
+        let noticiasUsuario = [];
+
+        const user = '<?php echo $user; ?>';
 
         function obtenerNoticias() {
             fetch('api/apiNoticia.php')
                 .then(response => response.json())
                 .then(data => {
-                    // Filtrar noticias para el usuario actual
-                    noticiasUsuario = data.filter(noticia => noticia.perfil === '<?php echo $user; ?>');
+                    noticiasUsuario = data.filter(noticia => noticia.perfil === user);
                     mostrarNoticias(noticiasUsuario);
                 })
                 .catch(error => console.error('Error al obtener noticias:', error));
@@ -88,7 +89,7 @@ else
             noticias[slideIndex - 1].style.display = 'block';
             noticias[slideIndex - 1].style.transform = 'translateX(0)';
             paginacionBtns[slideIndex - 1].classList.add('active');
-            setTimeout(mostrarSlide, 7000); // Cambia la noticia cada 5 segundos
+            setTimeout(mostrarSlide, 5000);
         }
 
         obtenerNoticias();
