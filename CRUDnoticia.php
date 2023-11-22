@@ -1,8 +1,11 @@
 <?php
+ini_set('post_max_size', '64M');
+ini_set('upload_max_filesize', '64M');
+
 require 'db/DB.php';
 $con = Db::obtenerConexion();
 $noticias = $con->query("SELECT * FROM noticia")->fetchAll(PDO::FETCH_ASSOC);
-echo "<div class='tabla'";
+echo "<div class='tabla'>";
 echo "<table>";
 echo "<tr>
         <th>ID</th>
@@ -33,6 +36,7 @@ foreach ($noticias as $noticia)
 
 echo '</table>';
 echo "</div>";
+
 
 if (isset($_POST['borrar'])) 
 {
@@ -127,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar']))
 </head>
 <body>
     <div class="formulario">
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" id="formulario" class="formulario">
         <label for="fecha_ini">Fecha inicio:</label>
         <input type="date" name="fecha_ini" required><br>
 
@@ -169,8 +173,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar']))
 
         <!-- Mostrar input file y checkbox solo si se selecciona 'video' o 'foto' -->
         <div id="file_input" style="display: none;">
-            <label for="archivo">Archivo:</label>
-            <input type="file" name="archivo" id="archivo" accept=""><br>
+            <label for="archivo" >Archivo:</label>
+            <input type="file" name="archivo" id="archivo" accept="" max-files ="562561190000000 "><br>
 
             <!-- Mostrar checkboxes solo si se selecciona 'video' -->
             <div id="formatos_video" style="display: none;">
