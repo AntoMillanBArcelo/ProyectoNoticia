@@ -1,6 +1,45 @@
 <?php
 require 'db/DB.php';
+$con = Db::obtenerConexion();
+$noticias = $con->query("SELECT * FROM noticia")->fetchAll(PDO::FETCH_ASSOC);
+echo "<div class='tabla'";
+echo "<table>";
+echo "<tr>
+        <th>ID</th>
+        <th>Fecha Inicio</th>
+        <th>Fecha final</th>
+        <th>Titulo</th>
+        <th>Acciones</th>
+        </tr>";
 
+foreach ($noticias as $noticia) 
+{
+    // Agregar una clase específica si el usuario no tiene rol
+    $rowClass = empty($noticia['rol']) ? 'sin-rol' : '';
+
+    echo "<tr class='$rowClass'>";
+    echo "<td>" . $noticia['id'] . "</td>";
+    echo "<td>" . $noticia['fecha_ini'] . "</td>";
+    echo "<td>" . $noticia['fecha_fin'] . "</td>";
+    echo "<td>" . $noticia['titulo'] . "</td>";
+    echo "<td>
+            <form method='POST'>
+                <input type='hidden' name='borrarNoticia' value='" . $noticia['id'] . "'>
+                <button type='submit' name='borrar'>Eliminar</button>
+            </form>
+        </td>";
+    echo "</tr>";
+}
+
+echo '</table>';
+echo "</div>";
+
+if (isset($_POST['borrar'])) 
+{
+    $id = $_POST['borrarNoticia'];
+    $stmt = $con->prepare("DELETE FROM noticia WHERE id = ?");
+    $stmt->execute([$id]);    
+}
 // Ruta donde se guardarán los archivos multimedia
 $rutaMultimedia = 'multimedia/';
 
@@ -87,6 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar']))
     </script>
 </head>
 <body>
+    <div class="formulario">
     <form action="" method="post" enctype="multipart/form-data">
         <label for="fecha_ini">Fecha inicio:</label>
         <input type="date" name="fecha_ini" required><br>
@@ -106,9 +146,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar']))
 
         <label for="duracion">Visibilidad:</label>
         <input type="time" name="duracion" required><br>
-
-        <label for="url">Url:</label>
-        <input type="text" name="url" required><br>
 
         <label for="perfil">Perfil:</label>
         <select name="perfil">
@@ -146,5 +183,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar']))
 
         <input type="submit" name="enviar" value="Crear Noticia">
     </form>
+    </div>  
 </body>
 </html>

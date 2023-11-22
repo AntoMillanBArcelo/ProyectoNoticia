@@ -1,4 +1,4 @@
-body {
+.formulario {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
@@ -6,7 +6,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
 }
 
 form {
@@ -67,4 +66,16 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     background-color: #5a5a5a;
+}
+
+.tabla {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    
+}
+
+.tabla input{
+    padding: 0;
 }

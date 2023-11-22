@@ -23,7 +23,8 @@
             .catch(error => console.error('Error al obtener noticias:', error));
     }
 
-    function mostrarNoticias(noticias) {
+    function mostrarNoticias(noticias) 
+    {
         const carrusel = document.getElementById('carrusel');
         const paginacion = document.getElementById('paginacion');
         
@@ -33,6 +34,7 @@
             noticiaElement.innerHTML = `
                 <h3>${noticia['titulo']}</h3>
                 <p>${noticia['contenido']}</p>
+                <img src = '${noticia['url']}'>
             `;
             carrusel.appendChild(noticiaElement);
 
